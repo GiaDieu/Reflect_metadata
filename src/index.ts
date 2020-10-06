@@ -18,26 +18,26 @@ import "reflect-metadata";
 
 // apply Reflect in TypeScript class
 
-@printMetadata
+@controller
 class Plane {
   color: string = "red";
 
-  @markFunc("Hi There")
+  @get("/login")
   fly(): void {
     console.log("vrrrrr");
   }
 }
 
-function markFunc(secretInfo: string) {
+function get(path: string) {
   return function (target: any, key: string) {
-    Reflect.defineMetadata("secret", secretInfo, target, key);
+    Reflect.defineMetadata("path", path, target, key);
   };
 }
 
-function printMetadata(target: typeof Plane) {
+function controller(target: typeof Plane) {
   // typeof Plane = constructor func
   for (let key in target.prototype) {
-    const secret = Reflect.getMetadata("secret", target.prototype, key); // key == 'fly', 'secret' from metadata property
-    console.log(secret);
+    const path = Reflect.getMetadata("path", target.prototype, key); // key == 'fly', 'secret' from metadata property
+    console.log(path);
   }
 }
