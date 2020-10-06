@@ -31,25 +31,25 @@ var Plane = /** @class */ (function () {
         console.log("vrrrrr");
     };
     __decorate([
-        markFunc("Hi There"),
+        get("/login"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", void 0)
     ], Plane.prototype, "fly", null);
     Plane = __decorate([
-        printMetadata
+        controller
     ], Plane);
     return Plane;
 }());
-function markFunc(secretInfo) {
+function get(path) {
     return function (target, key) {
-        Reflect.defineMetadata("secret", secretInfo, target, key);
+        Reflect.defineMetadata("path", path, target, key);
     };
 }
-function printMetadata(target) {
+function controller(target) {
     // typeof Plane = constructor func
     for (var key in target.prototype) {
-        var secret = Reflect.getMetadata("secret", target.prototype, key); // key == 'fly', 'secret' from metadata property
-        console.log(secret);
+        var path = Reflect.getMetadata("path", target.prototype, key); // key == 'fly', 'secret' from metadata property
+        console.log(path);
     }
 }
